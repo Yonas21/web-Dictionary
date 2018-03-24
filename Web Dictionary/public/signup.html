@@ -1,0 +1,55 @@
+<!doctpe html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="w3.css">
+    <style>
+            body{
+                background-color: lightblue;
+            }
+            
+        </style>
+</head>
+
+<body>
+        <div class="container" style="width:450px;margin:auto">
+                
+                <form class="w3-container w3-border ">
+                <h3 class="w3-blue">signup</h2>
+                <p>
+                <label class="w3-text-blue">UserName</label>
+                <input class="w3-input w3-text-blue" type="text" id="email"></p>
+                
+                <p>
+                <label class="w3-text-blue">password</label>
+                <input class="w3-input w3-text-blue" type="password" id="password"></p>
+                <a href="/login" target="_self"><button class="w3-btn w3-blue w3-text-white" type="button" onclick="signup()" > Submit> </button></a>
+                <a class="w3-green" style = "text-decoration:none" href="http://localhost:8100/login">Login</a><br>
+              </form>
+              <p id="p"></p>
+             </div>
+
+    <script>
+
+        function signup() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var xhr = new XMLHttpRequest();
+            var method = "GET";
+            var url = "http://localhost:8100/signup/" + email + "/" + password;
+           // document.getElementById("p").innerHTML = 1;
+            xhr.open(method, url, true);
+           // document.getElementById("p").innerHTML = 2;
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    document.getElementById("p").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+            console.log(url);
+        }
+    </script>
+</body>
+
+</html>

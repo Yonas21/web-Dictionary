@@ -1,0 +1,86 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="w3.css">
+    <style>
+        ul{
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="w3-container w3-round w3-border  w3-border w3-width-450">
+        <h1 class="w3-text-blue">Dictionary</h1>
+        <form action="" method="GET" style="width:25em;">
+            <p>
+            <input class="w3-input w3-border w3-text-blue"  type="text" id="search" oninput="suggest()" placeholder="Search for words">
+           <div style="margin:auto">
+            <p> <button class="w3-btn w3-blue w3-text-white w3-center" style="width: 130px;"
+                 type="button" id="search-btn" onclick="nav()"  >Search</button></p> </p>       
+            <p>
+                <a href="/login" target="_self"><button class="w3-btn w3-blue w3-text-white w3-center" 
+                     type="button" id="manage-btn" >Add-Keyword</button></a>
+            </p>
+            <a href="/login" ><p ><button class="w3-btn w3-blue w3-text-white w3-center "
+                 type="button" id="search-btn" >Edit-Keyword</button></p></a>
+        </div>
+           </div>
+        </form>
+    <div>
+        <p class="w3-light-blue w3-text-white" id="p2"></p>
+    </div>
+    <div>
+        <p class="w3-light-blue w3-text-white" id="p"></p>
+    </div>
+
+    <script>
+        function suggest() {
+            var word = document.getElementById("search").value;
+            var list;
+            var xhr2 = new XMLHttpRequest();
+            var method2 = "GET";
+            var url2 = "http://localhost:8100/suggestion/" + word;
+            xhr2.open(method2, url2, true);
+            xhr2.onreadystatechange = function () {
+                if (xhr2.readyState === XMLHttpRequest.DONE && xhr2.status === 200) {
+                    console.log(xhr2.responseText);
+                    list = JSON.parse(xhr2.responseText);
+                }
+                var s = "<ul id = \"list\"><em><b>";
+                for (word in list) {
+                    s += "<li  id =\"" + word + "\"" + "onclick=\"" + "select(" + word + ")" + "\"" + ">" + list[word] + "</li>";
+                }
+                s += "</b></em></ul>"
+                document.getElementById("p2").innerHTML = s;
+                document.getElementById("list").style.display = "block";
+            };
+            xhr2.send()
+        }
+        function select(id) {
+            var val = document.getElementById(id).innerHTML;
+            document.getElementById("search").value = val;
+
+            nav();
+        }
+        function nav() {
+            var word = document.getElementById("search").value;
+            var xhr = new XMLHttpRequest();
+            var method = "GET";
+            var url = "http://localhost:8100/dictionary/" + word;
+            xhr.open(method, url, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    document.getElementById("p").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+            console.log(url);
+        }
+        function add(){
+            window.location("http://localhost:8100/dictionary/");
+        }
+    </script>
+</body>
+
+</html>

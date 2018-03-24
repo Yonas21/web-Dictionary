@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="w3.css">
+        <style>
+             body{
+                background-color: lightblue;
+            }
+        </style>
+    </head>
+    <body>
+          <div class="container" style="width:450px;margin:auto">
+            
+            <form class="w3-container w3-border ">
+            <h3 class="w3-blue">Login</h2>
+            <p>
+            <label class="w3-text-blue">UserName</label>
+            <input class="w3-input w3-text-blue" type="text" id="email"></p>
+            
+            <p>
+            <label class="w3-text-blue">password</label>
+            <input class="w3-input w3-text-blue" type="password" id="password"></p>
+            <button class="w3-btn w3-blue w3-text-white" type="button" onclick="login()" > Submit> </button>
+            <a class="w3-green" style = "text-decoration:none" href="http://localhost:8100/signup">Sign Up</a><br>
+          </form>
+         </div>
+         <div class="contianer">
+             <p id = "display"></p>
+         </div>
+       
+        <script>
+            
+        function login(){
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var xhr = new XMLHttpRequest();
+	        var method = "GET";
+	        var url = "http://localhost:8100/login/"+email+"/"+password;   
+            xhr.open(method, url, true);
+            xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+			    console.log(xhr.responseText);
+                document.getElementById("display").innerHTML = xhr.responseText;
+                window.location= "http://localhost:8100/addword";
+                }
+            };
+            xhr.send();
+            console.log(url);
+            }
+        </script>
+    </body>
+</html>

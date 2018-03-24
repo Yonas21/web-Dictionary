@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="w3.css">
+    </head>
+    <body class="w3-light-blue">
+        <div class="container" style="width:450px;margin:auto">
+            <h3 class="w3-blue">Edit Word</h3>
+            <a class="w3-blue w3-large" href="http://localhost:8100/dictionary">Dictionary</a>
+            <p class=" w3-text-white  w3-large label">Word: </p><input class=" w3-input w3-border w3-text-blue" id="word" placeholder ="Search word from Dictionary">
+            <p class=" w3-text-white  w3-large label">Definition: </p><input class="w3-input w3-border w3-text-blue" id="defn" placeholder="Edit Definition"><br>
+            <button class=" w3-btn w3-green w3-text-white w3-large" onclick="Edit_word()">Edit_word>></button>
+            <div><p id="p"></p></div>   
+            <script>
+            function Edit_word(){
+                var word = document.getElementById("word").value;
+                word = word.toUpperCase();
+                var defn = document.getElementById("defn").value;
+                var xhr = new XMLHttpRequest();
+                var method = "GET";
+                var url = "http://localhost:8100/edit/"+word+"/"+defn;   
+                xhr.open(method, url, true);
+                xhr.onreadystatechange = function () {
+                if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    document.getElementById("p").innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send();
+                console.log(url);
+                }
+            </script>
+        </div>
+    </body>
+    </div>
+</html>
